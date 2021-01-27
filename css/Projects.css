@@ -1,0 +1,124 @@
+body {
+  /* background-image: linear-gradient(
+    to right top,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff
+  ); */
+  background-color: #fff;
+  /* background-image: linear-gradient(
+    to right top,
+    #b0b4bb,
+    #c4c6cc,
+    #d8d9dc,
+    #ececee,
+    #ffffff
+  ); */
+}
+
+.navbar {
+  padding: 1rem 10rem;
+}
+
+.nav-item {
+  padding-right: 5rem;
+}
+.nav-link {
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: black;
+}
+#home > a:hover,
+#About > a:hover,
+#Projects > a:hover,
+#Skills > a:hover,
+#Expirence > a:hover,
+#Contact > a:hover,
+#Experience > a:hover {
+  /* background-color: rgb(212, 209, 209);
+  border-radius: 10px; */
+  color: rgb(75, 0, 250);
+}
+
+.proj-img {
+  width: 100%;
+  height: 50vh;
+}
+.proj-img img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.proj-img-tictactoe {
+  width: 100%;
+  height: 50vh;
+}
+.proj-img-tictactoe img {
+  max-width: 100%;
+  max-height: 87%;
+}
+.proj-img-landing {
+  width: 100%;
+  height: 50%;
+}
+.proj-img-landing img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.proj-img-imdb {
+  width: 100%;
+  height: 50vh;
+}
+.proj-img-imdb img {
+  max-width: 100%;
+  max-height: 93%;
+}
+
+.card {
+  background-image: linear-gradient(
+    to right top,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff
+  );
+  border-radius: 10px;
+}
+
+.URL {
+  background-image: linear-gradient(
+    to right top,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff,
+    #ffffff
+  );
+  padding-top: 30px;
+}
+.whether {
+  padding-top: 60px;
+}
+/* .invoice {
+  margin-bottom: ;
+} */
+
+.AcadameicContent {
+  font-family: "Merriweather", serif;
+  font-family: "Oswald", sans-serif;
+  font-size: 25px;
+  color: black;
+}
+.numbers {
+  font-size: 25px;
+}
+
+.card:hover {
+  opacity: 0.8;
+  -webkit-box-shadow: 17px 0px 30px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 17px 0px 30px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 17px 0px 30px 0px rgba(0, 0, 0, 0.75);
+}
