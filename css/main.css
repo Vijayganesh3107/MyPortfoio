@@ -137,6 +137,9 @@ footer a:not(.nav-link) {
     margin-left: 0;
   }
 }
+.background {
+  background-color: black;
+}
 
 @media print {
   body {

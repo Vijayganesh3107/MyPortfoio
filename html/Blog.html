@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    </noscript>
+    <link href="../css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/aos.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/main.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/blog.css" rel="stylesheet">
+    <script src="./js/blog.js" defer></script>
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+      </style>
+    </noscript>
+    <title>Document</title>
+</head>
+<body>
+    <script src="./js/blog.js"></script>
+    <div class="timeline-card1 timeline-card-success card shadow-sm mt-5 container">
+        <div class="card-body">
+            <div><h2>My Expirience in Kaggle Titanic ML competition <i class="fas fa-medal"></i> <i class="fa fa-thumbs-up" aria-hidden="true"></i> and How did I improve on my score </h2>
+            <p>The <strong> Titanic challenge</strong> hosted by Kaggle is a competition in which the goal is to predict the survival or the death of a given passenger based on a set of variables describing him such as his age, his sex, or his passenger class on the boat</p>
+        </div>
+        <div>
+            In this competition, I will be given access to  two similar datasets that include passenger information like name, age, gender, socio-economic class, etc. One dataset is titled `train.csv` and the other is titled `test.csv`.
+
+Train.csv will contain the details of a subset of the passengers on board (891 to be exact) and importantly, will reveal whether they survived or not, also known as the “ground truth”.
+
+The `test.csv` dataset contains similar information but does not disclose the “ground truth” for each passenger. It’s your job to predict these outcomes.
+
+Using the patterns you find in the train.csv data, predict whether the other 418 passengers on board (found in test.csv) survived.
+        </div>
+        <div class="scoreimg mt-3 mb-3">
+            <img src="../images/MyScore.PNG">
+        </div>
+        <div class="InitalScore mt-3 mb-3">
+            Initally I had a score of 0.77511 which was done without doing any pre-processing on the data and just by applying the RandomForest Model.Then I did some pre-processing like removing outliers and Eleminating the null values and some Dimention reduction.By doing so the score was improved a little and the score jumped to 0.77751 which is not a big leap but the score improved.Let me share with you what I did to improve my score little
+        </div>
+        <div class="scoreimg">
+            <img src="../images/MySubmissionImprovement.PNG">
+        </div>
+        <div class="EDA mt-3 mb-3">
+            <h2> Exploratory data analysis</h2>
+            <p class="mt-3 mb-3">As in different data projects, we'll first start diving into the data and build up our first intuitions.
+
+                In this section, we'll be doing four things.
+            <ul>
+                <li>Data extraction: Just the usual thing of reading the data from the input (train.csv,test.csv)</li>
+                <li>Data Cleaning: This part is one of the part which I did to improve my score</li>
+                <li>Plotting:Analysing the data from the graphs</li>
+            </ul>
+            </p>
+            <p>
+                <u><h2>Data Cleaning</h2></u>
+                <p>For this I just analyzed the data of test and train  using the below command and found  list of attributes from the train dataset like cabin, age and Embarked has lots of null values.The Test Dataset also had null values in cabin and Age and a single null value in Fare.The first and the foremost job is to remove the inconsitancies in order to give accurate predictions of the output</p>
+                <ul>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Removing inconsitancies-Cabin</h4></u>
+                        <p>The Below function TransfromCabin which takes a dataset as an argument generates a new column called "Cabin Info Available" which consits of values "yes" or "No".If the cabin column is null then the column "Cabin Info Available" will be "No".Otherwise it will have a value of "Yes".By doing so we will have a clear idea whether an information on cabin is available or not.After doing this we can actually drop the column "Cabin" from the train datasest.</p>
+                        <div class="scoreimg">
+                            <img src="../images/CbinDataCleaning.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Removing inconsitancies-Embarked</h4></u>
+                        <p>The next attribute which has inconsistancy is the "Embarked" column and the inconsistancy in this column can be removed by replacing the null values with the most frequent values that is the mode of the attribute "Embarked".By doing so the null values in the attribute Embarked would be removed in the train dataset.Filling the null values with the mode of "Embarked" is done as below</p>
+                        <div class="scoreimg">
+                            <img src="../images/DataCleaningEmbarrkedTrain.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Removing inconsitancies-Fare</h4></u>
+                        <p>As far as fare is concerned there is no null values but some values of Fare are 0.Leaving them as such will not give an acuurate prediction.So I replced the 0 with "Nan" for both test and train dataset with the help of apply funtion.and I wrote a function TransformFare which takes a dataframe as an argument.This function checks for the null values in the fare which would be present as I replced the 0 with NAN and not only that it also checks under which class the value is null and replaces the null value from that particluar Pclass with the mean fare of that particular Pclass and removes the NaN value.</p>
+                        <div class="scoreimg">
+                            <img src="../images/CleaningFare.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Removing inconsitancies-Age</h4></u>
+                        <p>Next comes the Age Attribute. There are many null values in the age for both the test as well as the train dataframe and hence we need to remove the inconsistancies.This can be done easily by filling the null values of the Age attribute with the mean of the Age column.But this methord leads to poor accuracy.So what I did was I wrote a function AgebySex which takes a ataframe as an argument and I checked if the age is null and not only that I aslo checked for the Sex column, if the sex is female will subsitute the null value with the average age of female.If the sex is male then will subsitiute the average age of male passengers with the null value.</p>
+                        <div class="scoreimg">
+                            <img src="../images/CleaningAge.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Removing inconsitancies-Outlier Detection</h4></u>
+                        <p>From the Below box plot there are lots of outliers in the Fare and Age attributes.So this may also cause inconsitancy and will not provide an accurate predictions.So need to remove the outliers in the Fare and the Age attributes</p>
+                        <div class="scoreimg">
+                            <img src="../images/BoxBeforeOutlier.PNG">
+                        </div>
+                        <p>There are several ways of detecting the outlier one of the way is using the Inter Quartile Range(IQR).I am finding the values from 1st quantile and the 3rd quantile and the difference between them is the IQR.Then need to find the Maximum and the minimum value.The maximum value is sum of 3 times of IQR and values in the 3rd quantile.The minimum value is difference of values in the 3rd quantile and 3 times of IQR.the outliers are those values which are greater than the maximum value and the values which are less than the Minimum value.Since there is no values which are lesser than the minmum value no need to drop the values which are less than minimum value and only need to drop the values which are greater than the maximum value</p>
+                        <div class="scoreimg">
+                            <img src="../images/OutlierFare.PNG">
+                        </div>
+                        <p>The above code is for detecting the outliers for the Fare attribute and the below code is to detect the outliers for the Age attribute</p>
+                        <div class="scoreimg">
+                            <img src="../images/OutlierAge.PNG">
+                        </div>
+                        <p>Dropping the values in the Fare attribute which are greater than the maximum value</p>
+                        <div class="scoreimg">
+                            <img src="../images/DropFare.PNG">
+                        </div>
+                        <p>Dropping the values in the Age attribute which are greater than the maximum value</p>
+                        <div class="scoreimg">
+                            <img src="../images/DropAge.PNG">
+                        </div>
+                        <p>Below is the box plot after dropping all the ouliers</p>
+                        <div class="scoreimg">
+                            <img src="../images/AfterOulierDrop.PNG">
+                        </div>
+                    </li>
+                </ul>
+            </p>
+        </div>
+        <div class="FE">
+            <p class="mt-3 mb-3">
+                <h2>Feature Engineering</h2>
+                <p class="mt-3 mb-3">
+                    In the previous part, we flirted with the data and just eleminated the inconsistancies. 
+
+In this part, we'll see how to process and transform these variables in such a way the data becomes manageable by a machine learning algorithm.
+
+Then we will ad some more additional features that will be useful in building the model.
+
+Then we can mould the features like the passenger names,Cabin,Ticket informations,Family information and integrate this information in our model.
+
+                </p>
+                <ul>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Feature Added-Cabin Info Available</h4></u>
+                        <p>
+                            The Below function TransfromCabin which takes a dataset as an argument generates a new column called "Cabin Info Available" which consits of values "yes" or "No".If the cabin column is null then the column "Cabin Info Available" will be "No".Otherwise it will have a value of "Yes".By doing so we will have a clear idea whether an information on cabin is available or not.After doing this we can actually drop the column "Cabin" from the train datasest
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/FeatureCabin.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Feature Added-Title</h4></u>
+                        <p>
+                            From the name attribute we cam analyze different things such as title of the person.From the dataset the name is the format "Last Name,Title.FirstName".So one can get the title by splicing the value from the positon of the "," to the positon of the ".".By doing so a new column title could be formed.But the problem in the titles is that there are several titles so what I thougth to group similar groups under a common name like 'Don', 'Mme', 'Ms', 'Lady', 'Sir' under a common title 'highness'.Similarly did for other titles too and removed the attribute name which is no longer needed
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/NewTransformTitle.PNG">
+                        </div>
+                    </li>
+
+                    <li class="mt-3 mb-3">
+                        <u><h4>Feature Added-Ticket Length and Ticket Letters</h4></u>
+                        <p>
+                            The Ticket column is also not that useful for my model so what I did was I just took the first 3 letters of the ticket and added it to a new column "Ticket_Letters" and found the length of each ticket and stored it in a column "Ticket_Length".Then after that will drop the column "Ticket"
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/FeatureTicket.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Feature Added-Family Type and Family Size </h4></u>
+                        <p>
+                            From the values of SibSp and Parch we can come across differnt things like size of the family i.e addition of values of SibSp and the value of the Parch and need to add 1 [for the passenger travelling].From this size of the family could be found.The other thing is that with the help of the size of the family we could classify them under 4 catogries "solo" traveller, Traveller with "Small Family",Traveller with "Large Family",Traveller with "Big Family".This insight could also be done with the help of Size of the family.For the clasification fo the travellers I used Cut function which splits the values in given bins and if the value is in the range of that bin then the respective lable will be displayed in the "Family_type" Column
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/FeatureFamilySize.PNG">
+                            <img src="../images/FeatureFamilyType.PNG">
+                        </div>
+                    </li>
+
+                    <li class="mt-3 mb-3">
+                        <u><h4>Data Transformation </h4></u>
+                        <p>
+                            By calling all the function created and mentioned above I am transforming the old data, both the test and the train, into new data which is best suitable for our model and as mentioned above droping all the features which are of no use  
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/FunctionCallTrain.PNG">
+                            <img src="../images/FunctionCallTestPNG.PNG">
+                        </div>
+                    </li>
+                    <li class="mt-3 mb-3">
+                        <u><h4>Feature Selection </h4></u>
+                        <p>
+                            Now we need to select the features that are used by our model
+                        </p>
+                        <div class="scoreimg">
+                            <img src="../images/FeatureSelectionTrain.PNG">
+                            <img src="../images/FeatureSelectionTest.PNG">
+                        </div>
+                    </li>
+                </ul>
+            </p>
+        </div>
+        <div class="EDA">
+            <h2>Exploratory data analysis contd.</h2>
+            <p>I have created some interesting charts that will spot the hidden insights out of the data.</p>
+            <ol>
+                <li>Pclass vs Suvived</li>
+                <li>Fare vs Survived</li>
+                <li>Family_Size vs Survived</li>
+                <li>Sex vs Survived</li>
+                <li>Embarked vs Survived</li>
+            </ol>
+            <ul>
+                <li class="mt-3 mb-3">
+                    <u><h4>Pclass vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/PclassvsSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above graph it is seen that the survival rate is highest for the 1st class passengers and survival rate keeps on decreasing as the Class reduces.It isobvious that for the first class the saftey will be high and for escaping also they might have been given more priority
+                    </p>
+                    
+                </li>
+                <li class="mt-3 mb-3">
+                    <u><h4>Fare Vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/FarevsSurvived.PNG">
+                    </div>
+                    <p>
+                        From the above graph we can visulalize that the passengers who have paid more have survived.From this we can come to know that the people who have paid more for the ticket has been given higher priority while providing saftey boat for the passengers.From the Pclass vs Survied aslo we cam to know that more people from the first class whcih has a higher fare rate compared to other classes have surived the crash.
+                    </p>
+                    
+                </li>
+                <li class="mt-3 mb-3">
+                    <u><h4>Family_Size vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/FamilyvsSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above image it is clearly visible that a family of 4 members have survived more as compare to a family that contains member greater than 6.The Solo traveller's survival rate is also very less.The survival rate of the ver big family is nearly zero.We can interpret that members of the Big Family might be in the Class 3 beacuse their survival rate is nearly zero
+                    </p>
+                    <div class="scoreimg">
+                        <img src="../images/FamilyTypevsPclass.PNG">
+                    </div>
+                    <p>
+                        As said above all the members in the Very big family belongs to PClass 3 which is best illustared by the graph below.Thus they have a nearly 0 survival rate.They might have got an loterry and have got the 3 rd class tickets for free.
+                    </p>
+                    
+                </li>
+                <li class="mt-3 mb-3">
+                    <u><h4>Sex vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/SevvsSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above graph it is seen that the the usrvival rate for the male is very very less compared to the females.May be the females and children were given more priorty in place in the saftey boat.This might be the reaon
+                    </p>
+                    <div class="scoreimg">
+                        <img src="../images/SexvsPclassSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above graph information that could be gathered is that the survival rate of male is very less irrespective of the class.This may be because men would have helped all the women and children to saftey and held thier life in danger.
+                    </p>
+                    
+                </li>
+                <li class="mt-3 mb-3">
+                    <u><h4>Sex vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/SevvsSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above graph it is seen that the the usrvival rate for the male is very very less compared to the females.May be the females and children were given more priorty in place in the saftey boat.This might be the reaon
+                    </p>
+                    <div class="scoreimg">
+                        <img src="../images/SexvsPclassSurvival.PNG">
+                    </div>
+                    <p>
+                        From the above graph information that could be gathered is that the survival rate of male is very less irrespective of the class.This may be because men would have helped all the women and children to saftey and held thier life in danger.
+                    </p>
+                </li>
+                <li class="mt-3 mb-3">
+                    <u><h4>Embarked vs Survived</h4></u>
+                    <div class="scoreimg">
+                        <img src="../images/EmbarkedVsSurvived.PNG">
+                    </div>
+                </li>
+                </ul>
+        </div>
+
+        <div class="model mt-3 mb-3">
+            <h2> Modelling</h2>
+            <p>Here I have used the model which was given in the tutorial of Kaggle competition itslef which is RandomForestClassifier model.This model is one of the model which is used to do the predictions and produce an output with an decent accuracy</p>
+            <div class="scoreimg">
+                <img src="../images/Model.PNG">
+            </div>
+        </div>
+        <div class="refrences mt-3 mb-3">
+            <h2>Refrences</h2>
+            <p>I have made references to the following notebooks in the making of this notebook:</p>
+            <ul>
+                <li><a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html?highlight=cut#pandas.cut">https://pandas.pydata.org/</a></li>
+                <li>
+                    Interactive Visualization & modelling [0.803]Top7% by Syphax
+                </li>
+                <li>
+                    Titanic EDA + Simple Model by Massimiliano Viola
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    </div>
+</body>
+</html>
