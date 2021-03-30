@@ -70,6 +70,13 @@
 .scoreimg img {
   width: 100%;
 }
+.Accuracyimg {
+  max-width: 80%;
+}
+
+.Accuracyimg img {
+  width: 100%;
+}
 
 body {
   background-color: rgb(43, 25, 25);

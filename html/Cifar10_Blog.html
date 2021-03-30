@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    </noscript>
+    <link href="../css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/aos.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/main.css?ver=1.2.0" rel="stylesheet">
+    <link href="../css/blog.css" rel="stylesheet">
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+      </style>
+    </noscript>
+    <title>Cifar-10 Blog</title>
+</head>
+<body>
+    <div class="justify-content-center ml-5  offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+        <div class="timeline-card1 timeline-card-success card shadow-sm mt-5 container">
+            <div class="card-body">
+                <h2>My Expirences on how I imroved my Accuracy from 55% to 71% in CIFAR-10 Dataset <i class="fas fa-medal"></i> <i class="fa fa-thumbs-up" aria-hidden="true"></i></h1>
+                    <p>The <strong> CIFAR-10 </strong>dataset is a dataset that consists of 60,000 labeled images with 10 total classes. Each image is of shape (height=32, width=32, channels=3), and there are 50,000 training images and 10,000 test images.</p>
+                    <p>The Classes are 
+                        <ul>
+                            <li>Plane</li>
+                            <li>Car</l1>
+                            <li>Bird</li>
+                            <li>Cat</li>
+                            <li>Deer</li>
+                            <li>Dog</li>
+                            <li>Frog</li>
+                            <li>Horse</li>                                
+                            <li>Ship</li>
+                            <li>Truck</li>
+                        </ul>
+                        The training batches contain the remaining images in random order, but some training batches may contain more images from one class than another. Between them, the training batches contain exactly 5000 images from each class.
+                        The classes are completely mutually exclusive. There is no overlap between automobiles and trucks. "Automobile" includes sedans, SUVs, things of that sort. "Truck" includes only big trucks. Neither includes pickup trucks.
+
+                    </p>
+                    <p>
+                        In this Blog I am going to share my struggles and how I overcame them. My experimentation on the CIFAR-10 Dataset and how I improved the efficency from 58% to 71% 
+                    </p>
+                    <p>
+                        <h3><u>Basic Algorithm of CIFAR-10</u></h3>
+                    </p>
+                    <p>
+                        The following  steps are needed to be followed to training an image classifier
+                    </p>
+                    <p>
+                        <ol>
+                            <li>
+                                Load and normalizing the CIFAR10 training and test datasets using torchvision
+                            </li>
+                            <li>
+                                Define a Convolutional Neural Network
+                            </li>
+                            <li>
+                                Define a loss function
+                            </li>
+                            <li>
+                                Train the network on the training data
+                            </li>
+                            <li>
+                                Test the network on the test data
+                            </li>
+                            <li>
+                                Find the accuracy of our trained image classifier
+                            </li>
+                        </ol>
+                    </p>
+                    <p>
+                        <h4>1.  Load and normalizing the CIFAR10 test and train data</h4>
+                    </p>
+                    <p>
+                        <div class="transformDataSetimg mt-3 mb-3">
+                            <img src="../images/LoadDataSnap.PNG">
+                        </div>
+                        The above image  is the code for loading and batching the training an test data.Here I am batching the 50000 test and training data into 4 batches of 12500 images each.There will be testdata which contains 50000 images and training data which contains 50000 images.
+                        Initially the training and test data are downloaded into the root folder in the Data folder
+                    </p>
+                    <p>
+                        Now the primary goal is to create batches of training and test data. The testloader contains the data which has been batched.From the code the argument batch_size has the value of 4 so each batch will contain 12500 images.This contain only the traindata. The testloader contains the data which has been batched.From the code the argument batch_size has the value of 4 so each batch will contain 12500 images and each image will be from the testset.
+                        Before batching process we need to normalize the images or the data.From the code it is seen that the data is going to be normalized or transformed by 0.5 times.
+                        The output of torchvision datasets are PILImage images of range [0, 1]. We transform them to Tensors of normalized range [-1, 1]
+                    </p>
+                    <div class="ImageShowimg mt-3 mb-3">
+                        <img src="../images/ImageShow.PNG">
+                    </div>
+                    <p>
+                        The above code is to just display random 4 images and print their respective lables too.This is to just to ckech whether the images and the lables are mathcing or not
+                    </p>
+
+                    <h4>2. Define a Convolutional Neural Network</h4>
+                    
+                    <div class="Net34img mt-3 mb-3">
+                        <img src="../images/net34.PNG">
+                    </div>
+                    <p>
+                        <ol>
+                            <li>
+                                We receive the input image.
+                            </li>
+                            <li>
+                                We pass the image through a convolutional layer that has a kernel of size (5, 3) and has 16 filters and stride 1
+                            </li>
+                            <li>
+                                We perform max pooling with shape (2, 2) and stride 2.
+                            </li>
+                            <li>
+                                We perform another convolution, but this time with 32 filters
+                            </li>
+                            <li>
+                                We perform max pooling again with shape (2, 2) and stride 2.
+                            </li>
+                            <li>
+                                We perform last convolution, but this time with 64 filters
+                            </li>
+                            <li>
+                                The image is flattened out to be of shape (64 * 2 * 2 = 256) and passed through the first fully connected layer.
+
+                            </li>
+                            <li>The image is again passed through one more subsequent fully connected layers to get even more  flattened image
+                            </li>
+                            <li>
+                                The final output is of shape (1, 10) for each image class, and we perform classification.
+                            </li>
+                        </ol>
+                        The values of the input to the fc1 is calucalted by means of a fromula
+                    </p>
+                    <p>
+                        <div class="formuaimg mt-3 mb-3">
+                            <img src="../images/Formula.png">
+                        </div>
+                        <ol>
+                            <li> Input Data:(32,32,3)</li>
+                            <li> After 1st cov layer (28,28,16) as our kernel size is 5 so 32-5+1 and input is 6</li>
+                            <li>After max pooling (14,14,16)</li>
+                            <li>After the second convolutional layer (12,12,32)</li>
+                            <li>After max pooling (6,6,32)</li>
+                            <li>After the third convolutional layer (4,4,64)</li>
+                            <li>After max pooling (2,2,64)</li>
+                        </ol>
+                        Thus the last value is passed as the input to the fully convoluted layer.Now, notice the last layer’s shape is (2, 2, 64) and that in the forward function within our Net class we flatten out our data with x.view(-1, 64 * 2 * 2)
+                    </p>
+
+                    <h4>3. Define a Loss Function and optimizer selection</h4>
+                    <p>
+                        For this CIFAR-10 I have chosen AdamW as my Optimizer as it has given me maximum accuracy.How I chose AdamW will be explained in the experiments section.And the loss function defied is CrossEntropyLoss
+                    </p>
+
+                    <h4>4. Training the model</h4>
+                    <p>
+                        This step is when we actually train the network. For each epoch, we’ll basically be
+                        <ol>
+                            <li>Extract the input data and corresponding labels inputs, labels = data</li>
+                            <li>Clear out the gradient values in our optimizer optimizer.zero_grad() </li>
+                            <li>Calculate the output scores with our model outputs = net(inputs) </li>
+                            <li>Calculate the cross entropy loss between our predictions and the actual labels loss = criterion(outputs, labels) </li>
+                            <li>Calculate the gradient for every parameter where require_grads=True using loss.backward()</li>
+                            <li>Update our optimizer with the gradients computed from loss.backward() using optimizer.step()</li>
+                            <li>Update our running_loss .</li>
+                            <li>Print the loss along with the epoch values</li>
+                        </ol>
+                        Once executing the below code the loss values keeps on reducing as th epoch increases
+
+                        <div class="Traininglossimg mt-3 mb-3">
+                            <img src="../images/Trainingloss.PNG">
+                        </div>
+
+                        Then we need to save what all the model has learnt in .pth file.This can be done by executing the below snippet.
+                        <div class="savemodelimg mt-3 mb-3">
+                            <img src="../images/Savemodel.PNG">
+                        </div>
+                    </p>
+
+                    <h4>5. Test the network on the test data and obtain accuracy</h4>
+
+                    <p>
+                    After saving need to test the model on the testloader which conatins batches of data and predict the output and find the overall acuuracy of the model for a certain epoch and optimzer.By executing the below code one 
+
+                    <div class="Accuracyimg mt-3 mb-3">
+                        <img src="../images/EfficencyCode.PNG">
+                    </div>
+
+                    As said above this tends to iterate through the data in the testloader and split the data as images and its corresponding labels.Then we are training our model with the images that is iterated with.Then we are predicting the output and it is getting stored in predicted.The total count is caluclated by adding all the lables.But if the labels is same as the predicted value then correct will increment.
+                    Accuracy is ((total/corect)*100).This is how accuracy is calcuated 
+                </p>
+                    
+                    <h4><u>Experiments and Shorfalls and their solutions</u></h4>
+
+                    <p>
+                        Initally I tried with the below neural net which has 2 convolutional layers and 3 linear layers.But got an accuracy of 58% with SGD.Then I thought of varying different paraments like Layers in the neural net,learning rates in the optimizers,changing the type of optimizers and changed the epoch values 
+                        <div class="netimg mt-3 mb-3">
+                            <img src="../images/net.PNG">
+                        </div>
+                    <h5><u>Changing the type of optimizers keeping other factors constant </u></h5>
+                    I tried use 4 types of optimizer SGD,Adam,AdamW,RMSprop with its default parameters
+                    <p>
+                        As mentioed above I used SGD with default values for 2x3 NN I got an accuracy of 58%.Then I tried to change the type of optimizer to Adam with its default parameters I was able to achive a accuracy of 59%.Smiliarly tried with RMSprop got a accuracy of 56%.
+                    </p>
+                    <p>
+                        Then I tried to change the parameters of the optimizers that I have chosen
+                    </p>
+                    <h5><u>Changing the parameters of the optimizers and keeping the other values constant</u></h5>
+                    <p>
+                        Then I thought of changing the parameters of the optimizers as the accuarcy of each optimizers were below 60%
+                        By doing so I got some improvement in the accuracy.I have decreased the learning rate and the momentum so that the model will lear slowly and hence the accuracy would increase and eventually it did happen.There was a slight increase in the accuracy value.Then I kept the values(Learning Rate) in which I got an increase in the accuracy as constant thereafter.
+                    </p>
+
+                    <h5><u>Changing the number of layers in the nueral net </u></h5>
+                    <p>
+                        With the values of the learning rate and other parameters used in the previous step I tried to change the number of layers in the NN.Initially it was 2X3 NN then I tried 3X3 NN and tried to get the accuracy of the model and there was an increase in the accuracy.Then I even further changed the number of layers in the NN as 3X4 that is 3 Convolutional layer and 4 Linear layer and tried to get the efficiency and got the maximum out of all the three here and hence I fixed which the latter layer.
+                        Then was also got an accuracy of just 63%.Then thought of other ways to increase accuracy.But it was in vain untill I read <a href="https://www.kaggle.com/vikasbhadoria/cifar10-high-accuracy-model-build-on-pytorch">this</a> which gave me an idea to increase the number of cycles or epoch.
+                    </p>
+                    <h5><u>Changing the number of Epochs </u></h5>
+                    <p>
+                        By default there was 2 epochs then I incremented the epochss to 5 and checked the accuarcy.The accuracy for each and every optimizer increased drastically but the time taken to produce the output also increased drastically.Thus I decided to compromise Time taken for the accuarcy of the model.Then I further increased the epoch to 10 and the accuracy increased.At the end I have increased the epoch to 15 where I got the maximum accuracy with the AdamW optimizer of 71%.Then I plotted graphs for Accuracy vs Epoch for different optimizers which showed a increasing graph
+                        <div class="netimg mt-3 mb-3">
+                            <img src="../images/AdamWEfficiencyPlot.PNG">
+                        </div>
+                        <p>
+                            The above graph is for the AdamW optimizer where the accuracy keeps on increasing as the number of cycles or the epoch keeps on inccreasing.Once the code was given to me I first played with the number of epochs I just kept on increasing the number of epochs and tried to figure out the accuracy.Then there came an idea, that is if I keep on increasing the number of epochs the model reads the images more closely and also takes time to read the images and predict the output.Here I compensated the time taken for the model to read the images for the accuracy of the model.
+                        </p>
+                        <p>
+                            Similarly I have plotted graphs for RMSprop,Adam too
+                            <div class="netimg mt-3 mb-3">
+                                <img src="../images/RMSpropplot.PNG">
+                            </div>
+                            <p>
+                                Then I was tempted to try the same model of 3 convolutional layer and 4 linear layer with other optimizers too.Then I begun with the Adamax optimizer.The above graph is for the RMSprop optimizer where the accuracy keeps on increasing as the number of cycles or the epoch keeps on inccreasing.I then changed the optimezer type from AdamW to RMSProp to check how the efficiency varies if the optimizer is changed.Initially I kept the epoch at the meaximum and tried to reduce the number of epochs and alos was observerving the accuracy of the model using RMSProp.But investing all the time eventually the efficency of the model has not higher than that of the AdamW and the result was 65%.I got a lower value for epoch 15 than that of epoch 10 because I changed the leraning rate and I decreased it by mistake so there was of reduction in the accuracy. Then I tired with another optimizers like Adam, SGD and the graphs for the same is shown below.
+                            </p>
+                            <p>
+                                For Adam below graph was plotted.
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/AccuracyAdamPlot.PNG">
+                                </div>
+                            </p>
+                            <p>
+                                For SGD below graph was plotted.
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/SGDPlot.PNG">
+                                </div>
+                            </p>
+                            <h3>References</h3>
+                            <p>
+                                I have made references to the following notebooks in the making of this Assignment:
+                            <ul>
+                                <li>
+                                    <a href="https://www.kaggle.com/vikasbhadoria/cifar10-high-accuracy-model-build-on-pytorch">Cifar10 high accuracy model build on PyTorch</a>
+                                </li>
+                                <li>
+                                    <a href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#sphx-glr-beginner-blitz-cifar10-tutorial-py">Pytorch Documentation</a> 
+                                </li>
+                                <li><a href="https://www.youtube.com/watch?v=IKOHHItzukk&t=590s">Videos from deeplizard</a></li>
+                            </ul>
+                        </p>
+                        </p>
+                    </p>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
