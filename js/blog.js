@@ -17,7 +17,7 @@ notebookbtn.addEventListener("click",()=>{
     location.href="https://www.kaggle.com/vijayganesh3107/vijay-assignemnt-v2"
 })
 cifarnotebookbtn.addEventListener("click",()=>{
-    location.href="https://colab.research.google.com/drive/147kT6-1zz8oaDD4NS24Qd_0OfLMRk1NF?usp=sharing"
+    location.href="https://colab.research.google.com/drive/103OXk1WwR039DWuNqOfzV064hI8iWhuv?usp=sharing"
 })
 kaggleknowbtn.addEventListener("click",()=>{
     location.href="../html/Blog.html"

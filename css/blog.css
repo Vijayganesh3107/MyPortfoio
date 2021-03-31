@@ -70,11 +70,13 @@
 .scoreimg img {
   width: 100%;
 }
-.Accuracyimg {
+.Accuracyimg,
+.AdamWAccimg {
   max-width: 80%;
 }
 
-.Accuracyimg img {
+.Accuracyimg img,
+.AdamWAccimg img {
   width: 100%;
 }
 

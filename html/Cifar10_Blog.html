@@ -50,6 +50,9 @@
                     </p>
                     <p>
                         In this Blog I am going to share my struggles and how I overcame them. My experimentation on the CIFAR-10 Dataset and how I improved the efficency from 58% to 71% 
+                        <div class="AdamWAccimg mt-3 mb-3">
+                            <img src="../images/AdamWAccuracySnippet.PNG">
+                        </div>
                     </p>
                     <p>
                         <h3><u>Basic Algorithm of CIFAR-10</u></h3>
@@ -252,6 +255,45 @@
                                     <img src="../images/SGDPlot.PNG">
                                 </div>
                             </p>
+                            <p>
+                                I have also plotted a graph for the loss angainst the number of epochs.Eventually the loss gradually tends to decrease as the number of epochs increases but there would be a small raise in values of loss for each pointion in an epoch.
+                            </p>
+                            <h5>Loss vs Epoch for AdamW for 15 epochs</h5>
+                            <p>
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/AdamWGraph.png">
+                                </div>
+                            </p>
+                            <p>
+                                <h5>Loss vs Epoch for SGD for 15 epochs</h5>
+                            <p>
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/SGDGraph.png">
+                                </div>
+                            </p>
+                            </p>
+                            <p>
+                                <h5>Loss vs Epoch for Adam for 15 epochs</h5>
+                            <p>
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/AdamGraph.png">
+                                </div>
+                            </p>
+                            </p>
+                            <p>
+                                <h5>Loss vs Epoch for RMSprop for 15 epochs</h5>
+                            <p>
+                                <div class="netimg mt-3 mb-3">
+                                    <img src="../images/RMSpropGraph.png">
+                                </div>
+                            </p>
+                            </p>
+                            <p>
+                                From all the above graphs it is seen that the loss keeps on decreasing as the epochs keeps on increasing.But there would be very small increase in the loss values 
+                            </p>
+                            <p>
+                                Please <a href="https://colab.research.google.com/drive/103OXk1WwR039DWuNqOfzV064hI8iWhuv?usp=sharing">Click here</a> to access my python notebook
+                            </p>
                             <h3>References</h3>
                             <p>
                                 I have made references to the following notebooks in the making of this Assignment:
@@ -264,6 +306,8 @@
                                 </li>
                                 <li><a href="https://www.youtube.com/watch?v=IKOHHItzukk&t=590s">Videos from deeplizard</a></li>
                             </ul>
+
+                            From the <a href="https://www.youtube.com/watch?v=IKOHHItzukk&t=590s">these videos</a> I learnt how to change the hyperparameters of the convolutional layer.Then I built my own convolutional layer with the help of the mentioned channel.
                         </p>
                         </p>
                     </p>
