@@ -79,7 +79,12 @@
 .AdamWAccimg img {
   width: 100%;
 }
-
+.overunderbalanceimg1 {
+  max-width: 100%;
+}
+.overunderbalanceimg1 img {
+  width: 100%;
+}
 body {
   background-color: rgb(43, 25, 25);
 }

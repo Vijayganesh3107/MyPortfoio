@@ -1,5 +1,6 @@
 var btn=document.querySelector(".projbtn");
 var cifarbtn=document.querySelector(".cifarknowbtn");
+var overfittingknowbtn=document.querySelector(".overfittingknowbtn");
 var cifarnotebookbtn=document.querySelector(".cifarnotebookbtn");
 
 btn.addEventListener("click",()=>{
@@ -7,6 +8,9 @@ btn.addEventListener("click",()=>{
 })
 cifarbtn.addEventListener("click",()=>{
     location.href="../html/Cifar10_Blog.html"
+})
+overfittingknowbtn.addEventListener("click",()=>{
+    location.href="../html/Overfitting_Blog.html"
 })
 
 

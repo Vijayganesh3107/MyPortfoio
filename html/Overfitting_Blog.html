@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        </noscript>
+        <link href="../css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/aos.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/main.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/blog.css" rel="stylesheet">
+        <noscript>
+          <style type="text/css">
+            [data-aos] {
+                opacity: 1 !important;
+                transform: translate(0) scale(1) !important;
+            }
+          </style>
+        </noscript>
+        <title>Overfitting Blog</title>
+    </head>
+<body>
+    <div class="justify-content-center ml-5  offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+        <div class="timeline-card1 timeline-card-success card shadow-sm mt-5 container">
+            <div class="card-body">
+                <h2>My Expirences on how I reduced the loss and increase the performance of the model and give the value of Lambda for which the loss is least <i class="fas fa-medal"></i> <i class="fa fa-thumbs-up" aria-hidden="true"></i></h1>
+                    <p>
+                        The goal of this assignment is to learn about the concept of overfitting using the Higher order linear regression and with the help of this blog I will try to improve your understanging in the concept of overfitting
+                    </p>
+                    <p>
+                        In this assignment they asked me to generate 20 data pairs (X, Y) using y = sin(2*pi*X) + 0.1 * N  initally, in which
+                        <ul>
+                            <li>Use uniform distribution between 0 and 1 for X
+                            </li>
+                            <li>Sample N from the normal gaussian distribution</li>
+                            <li>Use 10 for train and 10 for test</li>
+                            <li>Using root mean square error, find weights of polynomial regression for order is 0, 1, 3, 9 and display the weights of each degree in a table and also plot the actual vs predicted graph</li>
+                            <li>Plot Training vs Test Erros</li>
+                            <li>generate 100 more data and fit 9th order model and draw fit
+                            </li>
+                            <li>Now we will regularize using the sum of weights for lamda values 1, 1/10, 1/100, 1/1000, 1/10000, 1/100000 </li>
+                            <li>draw test  and train error according to lamda 
+                            </li>
+                            <li>Based on the best test performance, what is my model?</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <h3><u> 1. What is UnderFitting and Overfitting?</u></h3>
+                    </p>
+                    <p>
+                        <div class="overunderbalanceimg mt-3 mb-3">
+                            <img src="../images/Underfitting_Overfitting_Balanced.PNG">
+                        </div>
+                    </p>
+                    <p>
+                        Understanding model fit is important for understanding the root cause for poor model accuracy. This understanding will guide you to take corrective steps. We can determine whether a predictive model is underfitting or overfitting the training data by looking at the prediction error on the training data and the evaluation data
+                    </p>
+                    <p>
+                        Poor performance on the training data could be because the model is too simple (the input features are not expressive enough) to describe the target well. Performance can be improved by increasing model flexibility. To increase model flexibility, try the following
+
+                    
+                    <ul>
+                        <li>Add new domain-specific features and more feature Cartesian products, and change the types of feature processing used (e.g., increasing n-grams size)</li>
+                        <li>Decrease the amount of regularization used</li>
+                    </ul>
+                </p>
+                <p>
+                    If your model is overfitting the training data, it makes sense to take actions that reduce model flexibility. To reduce model flexibility, try the following:
+                    <ul>
+                        <li>Feature selection: consider using fewer feature combinations, decrease n-grams size, and decrease the number of numeric attribute bins.</li>
+                        <li>Increase the amount of regularization used.</li>
+                    </ul>
+                </p>
+                <p>
+                    I did as per the above points and  I increased the number of sample points form 20 to 100 and calculated the error
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/LossForDegree920Samples.PNG">
+                    </div>
+                    The above image shows the test and training error for the degree 9 for 20 samples
+                </p>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/LossForDegree9100Samples.PNG">
+                    </div>
+                    The above image shows the test and training error for the degree 9 for 100 samples
+                </p>
+                <p>
+                    From the two images it is very clear that the test error for the degree 9 model for 100 data points is very less compared to the test error for the degree 9 for 20 sampels.
+                    This explains a point that if we tend to increase the number of data points the test error decreases which eventually reduces the overfit
+                </p>
+                <h4><u> Generate 20 data pairs (X, Y) using y = sin(2*pi*X) + 0.1 * N</u></h4>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_2_Underfit.PNG">
+                    </div>
+
+                    In this above code creating 20 sample data points using uniform distribution ranging from (0,1).Then implementing the function y as sin(2.pi.x) and some random nosie signal created from Normal Gaussian ditribution ranging from o to 1.The use of random seed allows us to omit the value of 0 in the uniform and normal distributions
+                </p>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_3_Underfit.PNG">
+                    </div> 
+                    The next step is to split the training data and the testing data into equal halves.There are 20 sample data points from that the all the even positioned elements goes to training data and odd positioned elements goes to test data for both x and y.The same is done in the above code snippet.The need o reshape is to make the values of X_train and X_test a Vector 
+                </p>
+                <h4><u>Using root mean square error, find weights of polynomial regression for order is 0, 1, 3, 9
+                </u></h4>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_4_Underfit.PNG">
+                    </div> 
+                </p>
+                <p>
+                    The above code is used to find the weights for the orders 1,3,6,9.
+                    In the above snippet I have taken 1,3,6,9 as the degree and I have createda sample x data with normal distribution and sample y data which is a sine wave with some Noise with gaussian distribution.
+                    Then comes the intresting part.I was not aware of the Pipeline concept in python so I was not able to code for this scenario and I came across a <a href="https://cyanacm.wordpress.com/2020/05/23/dataminint-assignment01/2/">blog </a>and from here I came to know that the pipelines, what it does is that it encapsulates the many features into a single model.The polynomialFeatures will contain the features of all the degrees mentioned in the list i.e 1,3,6,9 and not only that since Linear regression was asked to be uses I tried using Linear regression.The Pipeline shat it does is that it encapsulates the degrees and the linear regression into a single variable model.We can then train this model to get the weights and get the training and test erros
+                    Then from the Model we can fit in the X_train and y_train.From this we can retrive the weights by means of .coef_ .The we can predict the output values i.e the test values and train values could be predicted by means of model.predict function.Then the loss is caluculated from the predicted value and the actual value with the help of caluclate_loss function which creates RMS function. 
+                </p>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_5_Underfit.PNG">
+                    </div> 
+                    <p>
+                        From the above code snippet we can display the weights got in the previos step in a tabular form
+                    </p>
+                </p>
+                <h4><u>Plotting predicted loss and actual loss for 1,3,6,9 for 20 sample points</u></h4>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_6_Underfit.PNG">
+                    </div>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Loss_for_all_4_degrees.PNG">
+                    </div>  
+                </p>
+                <p>
+                    The above snippet tends to plot the graph for each degree mentioned.It plots the graph between the actual input vs the predicted value
+                </p>
+
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_7_Underfit.PNG">
+                    </div>
+                </p>
+                <p>
+                    From the above code we can plot the graph for Training vs test error for which we found the values in the previous step.It is clearly seen that the test error is very high for the degree 9.Our goal is to reduce the teste error for high other linear regression.In the further discussion let's see how to tackle this problem. 
+                </p>
+                <p>
+                    <h4><u>Plotting predicted loss and actual loss for 1,3,6,9 for 100 data points</u></h4>
+                </p>
+                <p>
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_8_Underfit.PNG">
+                    </div>
+                </p>
+                <p>
+                    Similar to previous step I have just increased the number of sample points and plotted a graph betwwen the samples , actual graph and the predicted graph.The left hand side graph is for 20 samples and right hand side graph is for 100 sample dat points.From the graph itsef it is seen that when the number of data points are high then the prediction would be almost accurate to the actual data. I have proved it visually but practically also I have proved.
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_9_Underfit.PNG">
+                    </div>
+                    From this the values for the test errors has been drastically decreased for 100 sample data points.
+                </p>
+                <h4><u>Calculating loss for various lambdas and regularizing the error using Ridge </u></h4>
+                <p>
+                    Now we need to regularize the errors which tend to go out of hand for higher order linear regression.So I am taking degree 9 and using various lambda values will need to reduce the test error.Lets see how it goes.
+                    <div class="overunderbalanceimg mt-3 mb-3">
+                        <img src="../images/Cell_15_Underfit.PNG">
+                    </div>
+                    <p>
+                        A regression model that uses L1 regularization technique is called Lasso Regression and model which uses L2 is called Ridge Regression.
+                        The key difference between these two is the penalty term.
+                        Ridge regression adds “squared magnitude” of coefficient as penalty term to the loss function. Here the highlighted part represents L2 regularization element.
+                        Here, if lambda is zero then you can imagine we get back OLS. However, if lambda is very large then it will add too much weight and it will lead to under-fitting. Having said that it’s important how lambda is chosen. This technique works very well to avoid over-fitting issue.
+                        Here I have made an experiment that if I increase the value of lambda beyond 1 the value of test error is decreasing
+
+                    </p>
+                </p>
+                <p>
+                    Now Model will contain a Polynomial feature only for degree 9 as we are considering only the higher order linear regression.The USP for the regularization in this model is the Ridge which reduces the test error for complex higher order models.
+                    Rest all are similar things as I mentioned it earlier.Then we are fiiting the model and extracting the weights from which I am predicting the errors for test and training
+                </p>
+                <div class="overunderbalanceimg mt-3 mb-3">
+                    <img src="../images/Cell_11_Underfit.PNG">
+                </div>
+                <div class="overunderbalanceimg mt-3 mb-3">
+                    <img src="../images/Cell_16_Underfit.PNG">
+                </div>
+                <p>
+                    Then need to plot the Samples Actual Value and Predicted value graph for all the lambda values.The errors are caluclualted in the previous step.Then we also need to plot a graph between Regularized training error and Regularized Test error
+                </p>
+                <div class="overunderbalanceimg mt-3 mb-3">
+                    <img src="../images/Cell_13_Underfit.PNG">
+                </div>
+                <p>
+                    From the above values of the test error and the lambda value, for lambda=0.001 has the least test error so  After Regularizing the errors with the help of lambda, the best model with low test error from all my experiments is with the lambda value of 0.001 and the loss value of 1.1222043348992945 
+                </p>
+                <div class="overunderbalanceimg1 mt-3 mb-3">
+                    <img src="../images/Cell_14_Underfit.PNG">
+                </div>
+                <h4><u>Experimentation apart from the reference</u></h4>
+                <p>
+                    <ul>
+                        <li>I have added another of lambda value 5 and checked how the test and the train error behaved.</li>
+                        <li>Found the lowest value of lambda for which the Regularized test loss is minimal</li>
+                        <li>I also tried the for all the degrees form 0 to 10
+                            <div class="overunderbalanceimg1 mt-3 mb-3">
+                                <img src="../images/Cell_17_Underfit.PNG">
+                            </div>
+                            <div class="overunderbalanceimg1 mt-3 mb-3">
+                                <img src="../images/Cell_18_Underfit.PNG">
+                            </div>
+                            <div class="overunderbalanceimg1 mt-3 mb-3">
+                                <img src="../images/Cell_19_Underfit.PNG">
+                            </div>
+                            <div class="overunderbalanceimg1 mt-3 mb-3">
+                                <img src="../images/Cell_20_Underfit.PNG">
+                            </div>
+                        </li>
+                    </ul>
+                    
+                </p>
+                <h3><u>References</u></h3>
+                <p>
+                    For writting this blog I have used the contnet from the following references:
+                    <ul>
+                        <li>
+                            <a href="https://towardsdatascience.com/l1-and-l2-regularization-methods-ce25e7fc831c">Regularization</a>
+                        </li>
+                        <li>
+                            <a href="https://docs.aws.amazon.com/machine-learning/latest/dg/model-fit-underfitting-vs-overfitting.html">Overfitting vs Underfitting</a>
+                        </li>
+                        <li>
+                            <a href="https://cyanacm.wordpress.com/2020/05/23/dataminint-assignment01/2/">Blog</a>
+                        </li>
+                    </ul>
+                </p>
+                </div>
+                </div>
+                </div>
+</body>
+</html>
