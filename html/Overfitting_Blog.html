@@ -118,7 +118,7 @@
                 <p>
                     The above code is used to find the weights for the orders 1,3,6,9.
                     In the above snippet I have taken 1,3,6,9 as the degree and I have createda sample x data with normal distribution and sample y data which is a sine wave with some Noise with gaussian distribution.
-                    Then comes the intresting part.I was not aware of the Pipeline concept in python so I was not able to code for this scenario and I came across a <a href="https://cyanacm.wordpress.com/2020/05/23/dataminint-assignment01/2/">blog </a>and from here I came to know that the pipelines, what it does is that it encapsulates the many features into a single model.The polynomialFeatures will contain the features of all the degrees mentioned in the list i.e 1,3,6,9 and not only that since Linear regression was asked to be uses I tried using Linear regression.The Pipeline shat it does is that it encapsulates the degrees and the linear regression into a single variable model.We can then train this model to get the weights and get the training and test erros
+                    Then comes the intresting part.I was not aware of the Pipeline concept in python so I was not able to code for this scenario and I came across a <a href="https://scikit-learn.org/0.15/auto_examples/plot_underfitting_overfitting.html">blog </a>and from here I came to know that the pipelines, what it does is that it encapsulates the many features into a single model.The polynomialFeatures will contain the features of all the degrees mentioned in the list i.e 1,3,6,9 and not only that since Linear regression was asked to be uses I tried using Linear regression.The Pipeline shat it does is that it encapsulates the degrees and the linear regression into a single variable model.We can then train this model to get the weights and get the training and test erros
                     Then from the Model we can fit in the X_train and y_train.From this we can retrive the weights by means of .coef_ .The we can predict the output values i.e the test values and train values could be predicted by means of model.predict function.Then the loss is caluculated from the predicted value and the actual value with the help of caluclate_loss function which creates RMS function. 
                 </p>
                 <p>
@@ -222,7 +222,10 @@
                             </div>
                         </li>
                     </ul>
-                    
+                                        
+                </p>
+                <p>
+                    Please click <a href="https://colab.research.google.com/drive/1tzdyfUPxZ3XxEBDJTW4ELbhFxfv87pRQ?usp=sharing">here</a> to access the python notebook
                 </p>
                 <h3><u>References</u></h3>
                 <p>
@@ -235,7 +238,7 @@
                             <a href="https://docs.aws.amazon.com/machine-learning/latest/dg/model-fit-underfitting-vs-overfitting.html">Overfitting vs Underfitting</a>
                         </li>
                         <li>
-                            <a href="https://cyanacm.wordpress.com/2020/05/23/dataminint-assignment01/2/">Blog</a>
+                            <a href="https://scikit-learn.org/0.15/auto_examples/plot_underfitting_overfitting.html">Blog</a>
                         </li>
                     </ul>
                 </p>
