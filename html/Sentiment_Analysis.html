@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        </noscript>
+        <link href="../css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/aos.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/main.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/blog.css" rel="stylesheet">
+        <noscript>
+          <style type="text/css">
+            [data-aos] {
+                opacity: 1 !important;
+                transform: translate(0) scale(1) !important;
+            }
+          </style>
+        </noscript>
+        <title>Sentiment Analysis Blog</title>
+    </head>
+<body>
+    <div class="justify-content-center ml-5  offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+        <div class="timeline-card1 timeline-card-success card shadow-sm mt-5 container">
+            <div class="card-body">
+                <h2>My Expirences on how I increased the acuuracy of the model using smoothing techniques and increase the performance of the model.Moreover performing 5 fold Cross validation accuracy<i class="fas fa-medal"></i> <i class="fa fa-thumbs-up" aria-hidden="true"></i></h2>
+                <h3><u>About DataSet</u></h3>
+                <p>
+                    This dataset was created for the Paper 'From Group to Individual Labels using Deep Features', Kotzias et. al,. KDD 2015
+                </p>
+<p>
+It contains sentences labelled with a positive or negative sentiment.
+</p>
+<p>
+Format:
+</p>
+<p>
+sentence score
+</p>
+<p>
+Details:
+</p>
+<p>
+Score is either 1 (for positive) or 0 (for negative)
+The sentences come from three different websites/fields:
+</p>
+<p>
+imdb.com
+amazon.com
+yelp.com
+</p>
+
+<p>
+For each website, there exist 500 positive and 500 negative sentences. Those were selected randomly for larger datasets of reviews.
+We attempted to select sentences that have a clearly positive or negative connotaton, the goal was for no neutral sentences to be selected.
+</p>
+<p>
+Amazon: contains reviews and scores for products sold on amazon.com in the cell phones and accessories category,
+and is part of the dataset collected by McAuley and Leskovec. Scores are on an integer scale from 1 to 5. We considered reviews with a score of 4 and 5 to be positive, and scores of 1 and 2 to be negative. We randomly partitioned the data into two halves of 50%, one for training and one for testing, with 35,000 documents in each set.
+</p>
+<p>
+IMDb: refers to the IMDb movie review sentiment dataset originally introduced by Maas et al. as a benchmark for
+sentiment analysis. This dataset contains a total of 100,000 movie reviews posted on imdb.com. There are 50,000 unlabeled
+reviews and the remaining 50,000 are divided into a set of 25,000 reviews for training and 25,000 reviews for
+testing. Each of the labeled reviews has a binary sentiment label, either positive or negative. In our experiments, we
+train only on the labelled part of the training set.
+</p>
+<p>
+Yelp: refers to the dataset from the Yelp dataset challenge from which we extracted the restaurant reviews. Scores
+are on an integer scale from 1 to 5. We again considered reviews with scores 4 and 5 to be positive, and 1 and 2 to
+be negative. We randomly generated a 50-50 training and testing split, which led to approximately 300,000 documents
+for each set. Sentences: for each of the datasets above, we extracted and manually labeled 1000 sentences from the test set, with 50% positive sentiment and 50% negative sentiment. These sentences are only used to evaluate our instance-level classi-
+fier for each dataset3. They are not used for model training, to maintain consistency with our overall goal of learning at
+a group level and predicting at the instance level.
+</p>
+<p>
+    From these above datasets I have taken Amazon Dataset which consits of Amazon product reviews
+</p>             </p>
+
+<p>
+    <h3><u>Reading the data from the Text file</u></h3>
+</p>
+
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_1_Senti.PNG">
+</div>
+<p>
+    Pre processing the data is very much required as data contains many words as numbers and words with special characters like ,',/ and numbers.If they are left as such,the vocabulary would count words like "it.",",the" and other stuffs like that.So it is better to remove the special characters from the data using regular expression and replace them with a empty space.
+</p>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_2_Senti.PNG">
+</div>
+<p>Before Pre-Processing</p>
+<div class="Beforepreprosses mt-3 mb-3">
+    <img src="../images/Data_Before_pre_process.PNG">
+</div>
+<p>
+    After Pre-processing
+</p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Data_After_pre_process.PNG">
+</div>
+
+<h2><u>Splitting the Data into train,test and dev</u></h2>
+<p>In the below code I have splitted the data into train,test and dev.I have kept 80% of the data as the train_data and 10% of the data as the test_data and rest 10% as the dev_data</p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Cell_3_Senti.PNG">
+</div>
+
+<h2><u>Building a vocabolary List from the test_data</u></h2>
+<p>Building the vocabolary is the next task and for each word there would be an array containing three elements against each word.For example in the vocabulary the word "the" will be listed like {"the":[15,20,35]}.In this the first thing in the array is the occurance of the word "the" in the positive documents and the second element in the array is the number of ocuurances of the word "the" in the negative documents and the third and the final element is the total occurances of the word "the" in all the documents.The function build_vocabulary_V2 takes two arguments one is the data containing the reviews and the sentiment and other is the threshold value below which the word in the vocabulary list would not appear.</p>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_4_Senti.PNG">
+</div>
+<p>
+    The vocabolary would look something like this
+</p>
+
+<div class="vocab mt-3 mb-3">
+    <img src="../images/Cell_5_Senti.PNG">
+</div>
+
+<h2><u>Calculating the probablity of occurance and the conditional probablity</u></h2>
+
+<h3>Finiding the probablity of occurance of a word</h3>
+<p>The below function prob_word takes two argument one is data in the form of a dataframe and a word which is a string.The basic goal of this function is to get the probablity of the given word in the document. For this the below formula is used P(Word)=(num of documents containing that given word / num of all documents). SO First nedd to read the stentences from the data dataframe and split each sentences and store it in an array.If we find the desired word in the sentence array then increment the counter by 1.The finally divide the count by the length of the data(which will eventually give the totla number of documents) will give the probablity of the occurance of the word.</p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Cell_6_Senti.PNG">
+</div>
+
+<p></p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Cell_7_Senti.PNG">
+</div>
+
+<h3>Finding the conditional probablity of a word given a sentiment</h3>
+
+<p>
+    Then the below code is used to find the conditional probablity.The Prob_by_Sentiment is a function which is dependent on another function count_all_pos_Neg_data which is used to find the all positive and negative documents in the given data which is a dataframe.
+</p>
+<p>
+The formula for finding the conditional probablity is P(word|Sentiment)= Number of positive documents containing the desired word / num of all review documents of given sentiment.
+</p>
+<p>
+The count array contains the count of all positive and negative documents.The if the sentiment passed is 1 then respective count value is given to the count.If the sentiment passed is 0 then respective count value is given to the count.Then applying the above formulla we can get conditinal probablity of the desired word for given sentiment
+</p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Cell_8_Senti.PNG">
+</div>
+<p>
+</p>
+<div class="Afterpreprosses mt-3 mb-3">
+    <img src="../images/Cell_9_Senti.PNG">
+</div>
+
+<h2><u>Calculate K-Fold Accuracy using dev dataset</u></h2>
+<p>
+    K-Fold Cross Validation is where a given data set is split into a K number of sections/folds where each fold is used as a testing set at some point. Lets take the scenario of 5-Fold cross validation(K=5). Here, the data set is split into 5 folds. In the first iteration, the first fold is used to test the model and the rest are used to train the model. In the second iteration, 2nd fold is used as the testing set while the rest serve as the training set. This process is repeated until each fold of the 5 folds have been used as the testing set. In the cal_k_fold_accuracy function first calculation fo the fold size is done by dividing the size of data by the value of K.Thus if the data size is 100 and k is 5 each fold contains 20 sentences.Now appending all the sentences to the sentence array and all the sentimanets to the sentiment array.Now some values form the sentence array and the sentiment arrays are popped and appended to the fold array.Now the fold array consits of 20 sentences and 20 sentiments.Similarly it is done for all the other fold.Then the value of each fold is appended to folds array.Thus the Folds array consists of 5 lists each of the lists containing 20 sentences and 20 sentiments.Then comes the main part of calclualting the accuracy for each elemnts in the folds array.First copy the folds array into train_fold and add [] to the list and copy the fold into test_fold.Then find the vocabulary for train_fold and lable counts for the same.Then the test_fold needs to be converted into a dataframe from a list as all the functions accepts dataframe as the input and caluclate the respective accuracy for the fold.
+</p>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cross_Validation.PNG">
+</div>
+
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_10_Senti.PNG">
+</div>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_11_Senti.PNG">
+</div>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_12_Senti.PNG">
+</div>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_13_Senti.PNG">
+</div>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_14_Senti.PNG">
+</div>
+
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_15_Senti.PNG">
+</div>
+
+<h2><u>Compare the effect of Smoothing(with and without smoothing) and Calclulating the final accuracy</u></h2>
+<p>
+    Laplace smoothing is a smoothing technique that handles the problem of zero probability in Naïve Bayes. Using Laplace smoothing, we can represent P(w’|positive) as
+    <div class="AdamWAccimg mt-3 mb-3">
+        <img src="../images/Laplace.PNG">
+    </div>
+    The smoothing technique that has been used here is the Laplace estimate which uses alpha as the smoothing parameter.If the alpha value is zero then there will not be any smoothing and the probablity will be zero if any of the feature doesnt have a value.But if the alpha value is set to 1 then there will be some small value even if there is no value in the feature available.The cal_accuracy function depends on predict function.The predict function takes 4 arguments the sentences,vocabulary,counts and the smoothing parameter Alpha.The role of the predict function is that based on the probablities  this (((vocabulary[word][label]+alpha) / (label_count[label]+(alpha*len(vocabulary))))) will find the probablity for both positive sentiment and a negative sentiment .If the negative probablity is greater than the positive probablity then returns 0 else it returns 1.So eventually the predict function predicts the sentiment based on the porbablity of the word.From the output it is seen that when accuracy is calculated for the alpha=0 the accuracy is 52% whereas when the accuracy is calculated with aplha=1 using laplace estimate the accuarcy has been increased from 0.52 to 0.53.The applying smoothing on the test_data the final accuracy comes out to be 57%
+</p>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_16_Senti.PNG">
+</div>
+<h2><u>Derive Top 10 words that predicts positive and negative class</u></h2>
+
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_17_Senti.PNG">
+</div>
+<div class="AdamWAccimg mt-3 mb-3">
+    <img src="../images/Cell_18_Senti.PNG">
+</div>
+<h2><u>References</u></h2>
+<p>Click <a href="https://www.kaggle.com/vijay420/sentiment-analysis">here</a> to access my Kaggle Notebook</p>
+<p>I have used the below references to complete  my assignment </p>
+
+<ul>
+    <li>
+        <a href="https://towardsdatascience.com/laplace-smoothing-in-na%C3%AFve-bayes-algorithm-9c237a8bdece">Laplace Smoothing</a>
+    </li>
+    <li>
+        <a href="https://stackoverflow.com/questions/43442072/pandas-how-can-i-do-cross-validation-without-using-scikit">Approach on Cross Validation</a>
+    </li>
+    <li>
+        <a href="https://medium.datadriveninvestor.com/k-fold-cross-validation-6b8518070833">5 Fold Cross-Validatio</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

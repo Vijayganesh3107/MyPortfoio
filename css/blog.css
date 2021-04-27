@@ -74,9 +74,21 @@
 .AdamWAccimg {
   max-width: 80%;
 }
+.Beforepreprosses,
+.Afterpreprosses {
+  max-width: 50%;
+}
+.vocab {
+  max-width: 30%;
+}
 
 .Accuracyimg img,
-.AdamWAccimg img {
+.AdamWAccimg img,
+.vocab img {
+  width: 100%;
+}
+.Beforepreprosses img,
+.Afterpreprosses img {
   width: 100%;
 }
 .overunderbalanceimg1 {
@@ -85,6 +97,7 @@
 .overunderbalanceimg1 img {
   width: 100%;
 }
+
 body {
   background-color: rgb(43, 25, 25);
 }
