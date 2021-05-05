@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+        </noscript>
+        <link href="../css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/aos.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/main.css?ver=1.2.0" rel="stylesheet">
+        <link href="../css/blog.css" rel="stylesheet">
+        <noscript>
+          <style type="text/css">
+            [data-aos] {
+                opacity: 1 !important;
+                transform: translate(0) scale(1) !important;
+            }
+          </style>
+        </noscript>
+        <title>Spam Mail Prediction Blog</title>
+    </head>
+<body>
+    <div class="justify-content-center ml-5  offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+        <div class="timeline-card1 timeline-card-success card shadow-sm mt-5 container">
+            <div class="card-body">
+                <h2>Here to Share my expirences on creating a Spam Email Predictor using Sklearn using many algorithms and how I chose the best model for the best result <i class="fas fa-medal"></i> <i class="fa fa-thumbs-up" aria-hidden="true"></i></h2>
+                <p>There was a task given to me as to build any application using the techniques learned in the Data Mining Course in this semester.I was searching for apps and was in confusion of choosing an app .Then it struck me.In the some Data Mining Session if I am not wrong  it was in TF-IDF session where an example of Email Spam Classifer came into play.That time itself I thought that I must create a Email spam classifer some day.I dont know why it came into my mind but it stuck into my mind.I didn't know that this soon I would be develeoping a simple Email spam prediction app this semester itself.It was there in my mind so I thought I would build it during my job serach time. </p>
+                <div>
+                    <h3>About the Dataset Used</h3>
+                    <p>As I was fixed in doing a email spam predictor I was searching for the dataset to be used.Then I came across the below mentioed dataset from kaggle.</p>
+                    <a href="https://www.kaggle.com/veleon/ham-and-spam-dataset">Spam Mail Dataset</a>
+                    <p></p>
+                    <p>The above dataset constists of two Folders Ham and Spam respectively.Each folders consits of text files.Added to there were 3052 text files[2551-Non Spam Text Files,501-Spam text Files].In each file there would be mail.</p>
+                    <p>All the mails in the text files could be read by means of Email Library in python</p>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/DataSet_Final_Project.PNG">
+                    </div>
+                </div>
+                <h2><u>Deep Dive into the code</u></h2>
+                <div>
+                    <p>First I was going through the dataset.The first thing that came into my mind was it is a text file and hence one need to read the file and Os library is needed for that so imported the os library.For reading the contents in the file one need to open the file using the path.So first I decided to save all the file names of respective folders in a separate list </p>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_1.PNG">
+                    </div>
+                    <p>The next step is to analyze the data in the text file so I just opened the file and got this</p>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_2.PNG">
+                    </div>
+                    <p>Then I was surfuing what could be done so that I could read the data and I came across this particualr document where I found the way to read the file <a href="https://docs.python.org/3/library/email.examples.html">here</a>[Challange#1]</p>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_3.PNG">
+                    </div>
+                    <p>The above snippet gave me the contents in the above mentioned file</p>
+                    <h3><u>EDA</u></h3>
+                    <p>Now I need to analyse the data so that to transform the data according to my wish</p>
+                    <h4>1.Number of Spam and Non-Spam mails</h4>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_1.PNG">
+                    </div>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_4.PNG">
+                    </div>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_34.PNG">
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <h4>2.Reading different portions of Mail</h4>
+                    <p>For this first I have read all the spam mails and stored it in an list and I have also read all the non-spam mails and stored it in an array.</p>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_5.PNG">
+                    </div>
+                    <p>Then I need to deep dive into the data and check what and all are present in the data.Then the next thing I thought was that what if I can read the From, To ,Subject and the Content of the mail separately.Then I refered <a href="https://docs.python.org/3/library/email.message.html">this</a> and came across the different functions present in the email library and was experimenting with the same.There are several functions that Email library has but in this I have used </p>
+                    <ul>
+                        <li>get_all('Name'):Return a list of all the values for the field named name.</li>
+                        <li>get_content():Returns the body of the mail</li>
+                        <li>get_payload():To Get the payload of the EmailMessage</li>
+                    </ul>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_6.PNG">
+                    </div>
+                    <div class="AdamWAccimg mt-3 mb-3">
+                        <img src="../images/Spam_Cell_7.PNG">
+                    </div>
+                  <p></p>
+                  <p>Then I tried to get the types of the email from the messages in the file using get_payload()</p>
+                  <div class="AdamWAccimg mt-3 mb-3">
+                    <img src="../images/Spam_Cell_8.PNG">
+                </div>
+                <p>The output would be either 'text/plain' or 'text/html' or 'Any Multipart type'</p>
+                <p>If it is a Text/plain or text/html it is fine.But if it is a multipart text are difficult to analyse.</p>
+                <p>Multipart texts:In the case of multiple part messages, in which one or more different sets of data are combined in a single body, a "multipart" Content-Type field must appear in the entity's header. The body must then contain one or more "body parts," each preceded by an encapsulation boundary, and the last one followed by a closing boundary [as found in <a href="https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">here</a>]</p>
+                <p>So in this I have analysed 'text/plain 'text/html' for the multipart content type I have displayed the content as none</p>
+                </div>
+                <div>
+                    <h3><u>Feature Engineering</u></h3>
+                    <p>Need to Perfom some feature engineering as the data in the dataset contains lots of html tags so the primary goal is to remove the html tags to texts</p>
+                    <ol>
+                        <li>
+                           <u> Removal_Html_Tags</u>
+                           <p>Lots of data in the dataset constsis of data with html tags so removal of the same is necessary so as to vectorize the data and predict the output with high accuarcy. The function Removal_Html_Tags takes the argument an email.</p>
+                           <p>I had no clue of how to remove the html tags from the text the I came across <a href="https://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string">this</a> and it was using BeautifulSoap.For this I need to install beautifulsoap by doing a pip install beautifulsoap4.A <a href="https://programminghistorian.org/en/lessons/intro-to-beautiful-soup">BeautifulSoap</a> is a Python library for getting data out of HTML, XML, and other markup languages. Say you’ve found some webpages that display data relevant to your research, such as date or address information, but that do not provide any way of downloading the data directly. Beautiful Soup helps you pull particular content from a webpage, remove the HTML markup, and save the information. It is a tool for web scraping that helps you clean up and parse the documents you have pulled down from the web.</p>
+                            <p>Then I faced another issue whenever I am trying to print the text after removal of html I got an error </p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_10.PNG">
+                            </div>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_9.PNG">
+                            </div>
+                            <p>I was scratching my head then I found out that for all the multipart contnet type mails this error is throwing up so I decided to keep exception handling here if the mails are of type multipart I would return None otherwise I would Return the value in which the HTML tags are removed</p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_11.PNG">
+                            </div>
+                        </li>
+                        <li><u>Convertion of Mail Contents to text </u>
+                        <p>The next task is to convert the mails into text and store it in an array for spam and non-spam respectivily</p>
+                        <p>The Function Conversion_Mail does the thing which I want that is it converts all the text/plain and the html/text to texts.</p>
+                        <p>The mail.walk() function tends to iterate through the different sections of mail such as To:,From:,Subject:,Contnet_type ect.</p>
+                        <div class="AdamWAccimg mt-3 mb-3">
+                            <img src="../images/Spam_Cell_12.PNG">
+                        </div>
+                        <p>Then I have stored the converted text in an array and created a dataframe from the array which contains stored text either from non-spam or from spam.I am also adding another column to the dataframe that is the "spam or not" column which is 1 if is spam and it is non-spam if it is 0.Thus there would be two dtaframes ,one for spam mails and other for non-spam Mails, each containing converted texts and Spam or not columns.</p>
+                        <div class="AdamWAccimg mt-3 mb-3">
+                            <img src="../images/Spam_Cell_13.PNG">
+                        </div>
+                        </li>
+                        <li><u> Checking for Null Values and Dropping them</u>
+                        
+                            <p>I have chekced if there are any null values if so I am dropping the null values directly.When I did 2 values had null values and hence I dropped them</p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_14.PNG">
+                            </div>
+                        </li>
+                        <li><u>Removing the escape sequences and puncuations like /n ,:; etc from cleaned data</u>
+                        
+                            <p>The above cleaned data in the dataframe had escape sequences and punctuations in them so removing them using the regular expression </p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_15.PNG">
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <h2><u>Model Selection and Experimentation</u></h2>
+                    <p>I have tried using different models 
+                        <ul>
+                            <li>SVM (Support Vector Machine) Classifier</li>
+                            <li>Naive Bayes Classifier</li>
+                            <li>Random Forest Classifier</li>
+                        </ul>
+                        Not only different models have been experiemnted but also I have experimented with different vectorizers like 
+                        <ul>
+                            <li>CountVectorizer</li>
+                            <li>TfidfVectorizer</li>
+                        </ul> 
+                        I am going to find the accuracy of each of the combination and select the best model.So there would be a total of 8 models for my experiemts and selecting the best one.
+                    </p>
+                    <ol>
+                        <li> <h5>Naive Bayes Classifier</h5>
+                            <p>
+                                <h5>Refrences:</h5>
+                            </p>
+                            <ul>
+                                <li><a href="https://www.reddit.com/r/MachineLearning/comments/2uhhbh/difference_between_binomial_multinomial_and/co8xxls/">https://www.reddit.com/r/MachineLearning/comments/2uhhbh/difference_between_binomial_multinomial_and/co8xxls/</a></li>
+                                <li> <a href="https://scikit-learn.org/stable/modules/naive_bayes.html">https://scikit-learn.org/stable/modules/naive_bayes.html</a> </li>
+                            </ul>
+                            <p>Naive Bayes Classifier is one of the successful method for text classification.
+                                We have following Naive Bayes Classifiers:</p>
+                                <ul>
+                                    <li>Bernoulli Naive Bayes:
+                                        <p>
+                                            The binomial model is useful if your feature vectors are binary (i.e., 0s and 1s). One application would be text classification with a bag of words model where the 0s 1s are "word occurs in the document" and "word does not occur in the document"
+                                        </p>
+                                    </li>
+                                    <li>
+                                        Multinomial Naive Bayes:
+                                        <p>The multinomial naive Bayes model is typically used for discrete counts. E.g., if we have a text classification problem, we can take the idea of bernoulli trials one step further and instead of "word occurs in the document" we have "count how often word occurs in the document", you can think of it as "number of times outcome number x_i is observed over the n trials"</p>
+                                    </li>
+                                    <li>
+                                        Gaussian Naive Bayes:
+                                        <p>Here, we assume that the features follow a normal distribution. Instead of discrete counts, we have continuous features (e.g., the popular Iris dataset where the features are sepal width, petal width, sepal length, petal length).</p>
+                                    </li>
+                                    <p>Looking at the above description, we can conclude that only Multinomial Naive Bayes is useful in our case. But just for the confirmation, we will also try Gaussian Naive Bayes.</p>
+                                </ul>
+                        </li>
+                    
+                    <ul>
+                        <li> <h5><u>Multinomial Naive Bayes with Countvectorizer:</u></h5>
+                            <p>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_17.PNG">
+                                </div>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_18.PNG">
+                                </div>
+                            </p>
+                        </li>
+                        <li><h5><u>Multinomial Naive Bayes with TFIDFVectorizer:</u></h5>
+                        <p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_19.PNG">
+                            </div>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_20.PNG">
+                            </div>
+                        </p>
+                        </li>
+                        <li>
+                            <h5><u>Guassian Naive Bayes with Countvectorizer</u></h5>
+                            <p>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_21.PNG">
+                                </div>
+                                <div class="Heatmapimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_22.PNG">
+                                </div>
+                            </p>
+                        </li>
+                        <li>
+                            <h5><u>Guassian Naive Bayes with TFIDFVectorizer</u></h5>
+                            <p>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_23.PNG">
+                                </div>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_24.PNG">
+                                </div>
+                            </p>
+                        </li>
+                        <p>Looking at the results, we can confirm - for text classification, Multinomial Naive Bayes is better than Gaussian Naive Bayes.</p>
+                    </ul>
+                    <li><h5> SVM Classifier</h5> 
+                        <h5><u>References</u></h5>
+                        <ul>
+                            <li> <a href="https://monkeylearn.com/text-classification-support-vector-machines-svm/">https://monkeylearn.com/text-classification-support-vector-machines-svm/</a> </li>
+                            <li><a href="https://scikit-learn.org/stable/modules/svm.html">https://scikit-learn.org/stable/modules/svm.html</a> </li>
+                            <li> <a href="https://www.datacamp.com/community/tutorials/svm-classification-scikit-learn-python">https://www.datacamp.com/community/tutorials/svm-classification-scikit-learn-python</a></li>
+                        </ul>
+                        <p>There are many different algorithms we can choose from when doing text classification with machine learning. One of those is Support Vector Machines (or SVM).</p>
+                        <p>Support vector machines is an algorithm that determines the best decision boundary between vectors that belong to a given group (or category) and vectors that do not belong to it. That’s it. It can be applied to any kind of vectors which encode any kind of data. This means that in order to leverage the power of svm text classification, texts have to be transformed into vectors.</p>
+                        <p>As we have already transformed our texts into vectors, we can directly start training and predicting.</p>
+                        <p>According to the documentation of 'scikit-learn':
+                            For large datasets consider using sklearn.svm.LinearSVC and not sklearn.svm.SVC
+                            So, we will go with sklearn.svm.LinearSVC</p>
+                        <p></p>
+                        <p>Regularization:</p>
+                        <p>Regularization parameter in python's Scikit-learn C parameter used to maintain regularization. Here C is the penalty parameter, which represents misclassification or error term. The misclassification or error term tells the SVM optimization how much error is bearable. This is how you can control the trade-off between decision boundary and misclassification term. A smaller value of C creates a small-margin hyperplane and a larger value of C creates a larger-margin hyperplane.For this I am trying with C=1000</p>
+                    </li>
+                    <ul>
+                        <li>
+                        <h5><u>LinearSVC(C=1000) with Countvectorizer</u></h5>
+                        <p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_27.PNG">
+                            </div>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_26.PNG">
+                            </div>
+                        </p>
+                        </li>
+                        <li>
+                            <h5><u>LinearSVC(C=1000) with TFIDFVectorizer</u></h5>
+                            <p>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_29.PNG">
+                                </div>
+                                <div class="AdamWAccimg mt-3 mb-3">
+                                    <img src="../images/Spam_Cell_28.PNG">
+                                </div>
+                            </p>
+                        </li>
+                    </ul>
+                    <li> <h5>RandomForrest Classifier</h5>
+                        <h5><u>References</u></h5>
+                        <ul>
+                            <li> <a href="https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html">https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html</a> </li>
+                            <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier</a> </li>
+                            <li> <a href="https://en.wikipedia.org/wiki/Random_forest">https://en.wikipedia.org/wiki/Random_forest</a></li>
+                        </ul>
+                        <p>A random forest is a meta estimator that fits a number of decision tree classifiers on various sub-samples of the dataset and uses averaging to improve the predictive accuracy and control over-fitting.</p>
+                        <p>In other words, Random forests or random decision forests are an ensemble learning method for classification, regression and other tasks that operate by constructing a multitude of decision trees at training time and outputting the class that is the mode of the classes (classification) or mean prediction (regression) of the individual trees. Random decision forests correct for decision trees' habit of overfitting to their training set.</p>
+                        <p>We will set the maximum depth of tree to 100 for better results.</p>
+                        <p>I used this value after doing some testing on the data. (<100 : Low Accuracy, >100 : Large computing time)</p>
+                        <p>The number of trees in the forest (n_estimators) is considerd as one of the most important factor for getting better accuracy.</p>
+                        <p>We will use n_estimators =20</p>
+                    </li>
+                
+                <ul>
+                    <li><h5><u>RandomForrest with CountVectorizer</u></h5>
+                        <p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_33.PNG">
+                            </div>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_30.PNG">
+                            </div>
+                        </p></li>
+                    <li><h5><u>RandomForrest with TFIDFVectorizer</u></h5>
+                        <p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_31.PNG">
+                            </div>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/Spam_Cell_32.PNG">
+                            </div>
+                        </p></li>
+                </ul>
+            </ol>
+                    <p>All the accuracies are good and we cannot choose the model only based on the accuracy.Thus the heatmap helps us to choose the model wisely.For RandomForrest with Countvectorizer even though the accuracy is 84% its accuarcy is bad when finding the Spam mail.From the heatmap it is seen that it predicts only 14% of the spam mail correctly.Similarly Gaussian NB with Countvectorizer also predicts only 78% of the spam mails correctly.Between SVC with Countvectorizer and Multinomial Naive Bayes with Countvectorizer need to choose one.I have chosen Multinomial Naive Bayes with Countvectorizer as of now.But seeing the heatmaps of TFIDFVectorizer MultinominalNB doesnt perform and LinearSVC performs well along with both in TFIDFVectorizer and CountVectorizer.Thus I choose SVC as my model along with the TFIDFVectorizer as my final classifier as it finds 99% of the spam mails whereas the other finds 93% of the spam mails.Thus I have chosen LinearSVC(C=1000) with TFIDFVectorizer</p>
+                </div>
+                <h3>Efficieny Comparisons</h3>
+                <div class="AdamWAccimg mt-3 mb-3">
+                    <img src="../images/Spam_Cell_35.PNG">
+                </div>
+                <div class="AdamWAccimg mt-3 mb-3">
+                    <img src="../images/Spam_Cell_36.PNG">
+                </div>
+                <h3><u>Eperiments Done:</u></h3>
+                <ul>
+                    <li><p>As shown above I have done Experirments in choosing the best model.So I have done experiments in choosing the classifier and as well as choosing the Vectorizer and Finally choosing the best model based on the accuracy and the heatmap</p></li>
+                    <li> <u>For svm</u>
+                        <p>Experimented with the different values of C and its effect on the performance.
+                            C is the penalty parameter, which represents misclassification or error term. 
+                            The misclassification or error term tells the SVM optimization how much error is bearable. 
+                            This is how you can control the trade-off between decision boundary and misclassification term. 
+                            A smaller value of C creates a small-margin hyperplane and a larger value of C creates a larger-margin hyperplane and selected the value of C such that the performace is boosted</p>
+                    </li>
+                    <li>
+                        <u>For Random Forest Classifier:</u>
+                        Experimented through distinct values for maximum depth allowed for each tree in the forest, as well as the total number of trees in forest.
+                        Achieved a balanced model by tuning these values with multiple testing and found the best possible thresholds for our dataset and selected the appropriate value of n_estimators
+                    </li>
+                    <li><u>OverFit:
+                    </u>
+                    <p>After concluding the best classifier using all the hyperparameter tuning, I have gone through overfitting using maximum possible test dataset.The model was then also performing well with accuracy of 98% and predicting almost 99% of the spam mails as spam
+                    </p></li>
+                </ul>
+                <h3><u>Challages Faced while doing this app:</u></h3>
+                <p>
+                    <ul>
+                    <li>
+                        The first and foremost challange I face was I was unaware of how to read different parts of the email until I came acroos the email Library documentation.Once I went through the documentation and the examples using the Email library I came to know how to traverse through different portions of mail
+                    </li>
+                    <li>I had no clue of how to remove the html tags from the text the I came across this and it was using BeautifulSoap.For this I need to install beautifulsoap by doing a pip install beautifulsoap4 </li>
+                    <li>Then I faced another issue whenever I am trying to print the text after removal of html I got an error and I was scratching my head then I found out that for all the multipart contnet type mails this error is throwing up so I decided to keep exception handling here if the mails are of type multipart I would return None otherwise I would Return the value in which the HTML tags are removed</li>
+                </ul></p>
+                <h3><u> Version Control</u></h3>
+                <p>For your reference I have added the Version History from Kaggle</p>
+                <div class="Versionimg mt-3 mb-3">
+                    <img src="../images/VersionControl_Spam.PNG">
+                </div>
+
+                <h4><p>Click <a href="https://www.kaggle.com/vijay420/project-email-classifier">here</a> to access my kaggle notebook</p></h4>
+                <h4><p>Youtube Demo Video Link: <a href="https://youtu.be/cpUCrmlnyBY">Demo</a></p></h4>
+                <h4>
+                    <p>
+                        Simple Spam Mail Predictor App: <a href="http://65.2.151.95:8501/">App</a>
+                    </p>
+                </h4>
+                <p></p>
+                <p></p>
+                <p></p>
+                <div class="mt-5">
+                    <h4>Features of my App</h4>
+                <p>Please find the screenshots of the App that I have created belwo:
+                    <ul>
+                        <li>
+                            <p>The below image is the landing page of my simple spam mail prediction app</p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                            <img src="../images/SS_Homepage_App.PNG">
+                        </div>
+                    </li>
+                        <li>
+                            <p>The major goal of the app is to predict whether an given email is spam or not.If it is a spam then it displays that the mail whcih is entered is a spam mail otherwise it would idsplay that its is not a spam mail</p>
+                            <div class="AdamWAccimg mt-3 mb-3">
+                                <img src="../images/SS_Non_Spam.PNG">
+                            </div>
+                        </li>
+                        <li> <div class="AdamWAccimg mt-3 mb-3">
+                            <img src="../images/SS_Spam.PNG">
+                        </div></li>
+                    </ul>
+                    
+                    
+                   
+                </p>
+            </div>
+                <h3><u> Refrences:</u></h3>
+                <p>I have referenced from the following links to build my notebook and blog </p>
+                <p>
+                    <ul>
+                        <li> 
+                            <a href="https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory">https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory</a>
+                        </li>
+                        <li>
+                            <a href="https://docs.python.org/3/library/email.parser.html">https://docs.python.org/3/library/email.parser.html</a>
+                        </li>
+                        <li>
+                            <a href="https://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string">https://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string</a>
+                        </li>
+                        <li>
+                            <a href="https://docs.python.org/3/library/email.examples.html">https://docs.python.org/3/library/email.examples.html</a>
+                        </li>
+                        <li>
+                            <a href="https://www.kaggle.com/chetnakhanna/email-spam-ham-classification">https://www.kaggle.com/chetnakhanna/email-spam-ham-classification</a>
+                        </li>
+                        <li>
+                            <a href="https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html</a>
+                        </li>
+                        <li>
+                            <a href="https://programminghistorian.org/en/lessons/intro-to-beautiful-soup">https://programminghistorian.org/en/lessons/intro-to-beautiful-soup</a>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

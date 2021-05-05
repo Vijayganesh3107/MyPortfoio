@@ -78,17 +78,26 @@
 .Afterpreprosses {
   max-width: 50%;
 }
+.Heatmapimg {
+  max-width: 50%;
+}
+.Versionimg {
+  max-width: 30%;
+}
+
 .vocab {
   max-width: 30%;
 }
 
 .Accuracyimg img,
 .AdamWAccimg img,
-.vocab img {
+.vocab img,
+.Versionimg img {
   width: 100%;
 }
 .Beforepreprosses img,
-.Afterpreprosses img {
+.Afterpreprosses img,
+.Heatmapimg img {
   width: 100%;
 }
 .overunderbalanceimg1 {

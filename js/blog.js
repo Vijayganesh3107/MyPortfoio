@@ -4,6 +4,11 @@ var overfittingknowbtn=document.querySelector(".overfittingknowbtn");
 var cifarnotebookbtn=document.querySelector(".cifarnotebookbtn");
 var overfittingnotebookbtn=document.querySelector(".overfittingnotebookbtn");
 var sentianalknowbtn=document.querySelector(".sentianalknowbtn");
+var spamnotebookbtn=document.querySelector(".spamnotebookbtn");
+var spamknowbtn=document.querySelector(".spamknowbtn");
+var spamAppbtn=document.querySelector(".spamAppbtn");
+var youtubeAppbtn=document.querySelector(".youtubeAppbtn");
+
 
 btn.addEventListener("click",()=>{
     location.href="../html/Projects.html"
@@ -16,6 +21,15 @@ overfittingknowbtn.addEventListener("click",()=>{
 })
 sentianalknowbtn.addEventListener("click",()=>{
     location.href="../html/Sentiment_Analysis.html"
+})
+spamknowbtn.addEventListener("click",()=>{
+    location.href="../html/Spam_Email_predictor.html"
+})
+spamAppbtn.addEventListener("click",()=>{
+    location.href="http://65.2.151.95:8501/"
+})
+youtubeAppbtn.addEventListener("click",()=>{
+    location.href="https://youtu.be/cpUCrmlnyBY"
 })
 
 
@@ -35,6 +49,9 @@ overfittingnotebookbtn.addEventListener("click",()=>{
 })
 sentianalnotebookbtn.addEventListener("click",()=>{
     location.href="https://www.kaggle.com/vijay420/sentiment-analysis"
+})
+spamnotebookbtn.addEventListener("click",()=>{
+    location.href="https://www.kaggle.com/vijay420/project-email-classifier"
 })
 kaggleknowbtn.addEventListener("click",()=>{
     location.href="../html/Blog.html"

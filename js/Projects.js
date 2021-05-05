@@ -21,6 +21,7 @@ var frontendUrl=document.getElementById("githubfrontendurlshortner")
 var backendUrl=document.getElementById("githubbackendurlshortner")
 var netlifyUrl=document.getElementById("netlifyurlurlshortner")
 
+
 netlifyurlclock.addEventListener("click", () => {
   location.href = "https://dazzling-babbage-dbc251.netlify.app";
 });
